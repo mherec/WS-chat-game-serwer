@@ -1,7 +1,7 @@
 
 
 function censorText(text) {
-    const forbiddenWords = ['chuj', 'cipa', 'czarnuch', 'debil', 'dupa', 'dupek', 'frajer', 'jebac', 'jebana', 'jebany', 'jebać', 'kurwa', 'pedal', 'pedał', 'szmata', 'zjebac', 'zjebana', 'zjebany', 'zjebać'];
+    const forbiddenWords = ['chuj', 'cipa', 'czarnuch', 'debil', 'dupa', 'dupek', 'frajer', 'jebac', 'jebana', 'jebany', 'jebać', 'kurwa', 'kurwie', 'kurwo', 'kurwy', 'kurwom', 'pedal', 'pedał', 'szmata', 'zjebac', 'zjebana', 'zjebany', 'zjebać'];
     let censoredText = ' ' + text.toLowerCase() + ' '; // dodajemy spacje na początku i na końcu, żeby obsłużyć słowa na początku i na końcu tekstu
     forbiddenWords.forEach(word => {
         let regex;
