@@ -51,7 +51,7 @@ wss.on('connection', function connection(ws, req) {
                     wss.broadcast(JSON.stringify(message));
                 }
                 if (dataIncom.com === 'game') {
-                    console.log(dataIncom);
+                 //   console.log(dataIncom);
                     changePlayerPosition(dataIncom.id, dataIncom.userX, dataIncom.userY);
                     ws.send(JSON.stringify(players));
                 }
@@ -93,7 +93,6 @@ app.listen(postPort, () => {
 })
 
 function changePlayerPosition(id, newX, newY) {
-    console.log(id)
     for (let i = 1; i <= (Object.keys(players).length - 1); i++) {
         if (players[i].id === id) {
             players[i].pozX = newX;
