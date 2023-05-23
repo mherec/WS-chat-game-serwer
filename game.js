@@ -7,17 +7,15 @@ const chat = require('./engine/chat');
 // Klucz można dodać do env lub najlepiej pobierać z bazy dla każdego indywidualnie
 const key = '';
 
-let nextId = 1;
+let nextId = 75478;
 const clients = new Map();
 
 app.use(express.static('web'));
 
-let players = {
-    'testowy': [{
-        pozX: 120,
-        pozY: 200,
-    }]
-};
+let players = [{}];
+players[0] = { com: "game", key: key }
+
+
 
 const wss = new WebSocket.Server({ port: wsPort });
 
@@ -32,8 +30,12 @@ wss.broadcast = function broadcast(msg) {
 wss.on('connection', function connection(ws, req) {
 
     const id = nextId++;
+    let pozX;
+    let pozY;
+    let username;
     clients.set(id, ws);
-    console.log('Connected, ID:', id);
+
+    console.log('Connected, ID:', id, players);
 
     ws.on('message', function message(data) {
         try {
@@ -42,13 +44,28 @@ wss.on('connection', function connection(ws, req) {
                 if (dataIncom.com === 'chat') {
                     const message = {
                         com: 'chat',
+                        id: id,
                         username: dataIncom.username,
                         message: chat.censorText(dataIncom.message),
                     }
                     wss.broadcast(JSON.stringify(message));
                 }
                 if (dataIncom.com === 'game') {
-                    ws.send(players);
+                    console.log(dataIncom);
+                    changePlayerPosition(dataIncom.id, dataIncom.userX, dataIncom.userY);
+                    ws.send(JSON.stringify(players));
+                }
+                if (dataIncom.com === 'login') {
+                    username = dataIncom.username;
+                    let newUser = {
+                        id: id,
+                        username: username,
+                        pozX: 123,
+                        pozY: 300,
+                    };
+                    players.push(newUser);
+                    const auth = [{ com: 'login', id: newUser.id }]
+                    ws.send(JSON.stringify(auth));
                 }
             }
         } catch (e) {
@@ -75,3 +92,13 @@ app.listen(postPort, () => {
     console.log(msg);
 })
 
+function changePlayerPosition(id, newX, newY) {
+    console.log(id)
+    for (let i = 1; i <= (Object.keys(players).length - 1); i++) {
+        if (players[i].id === id) {
+            players[i].pozX = newX;
+            players[i].pozY = newY;
+            break; // Exit the loop after updating the player position
+        }
+    }
+}

@@ -47,6 +47,8 @@ function setPoz(poz, val) {
     }
 }
 
+// funkcja pobierająca obiekt
+
 function objIdFastLoader(id) {
     let object;
     try {
@@ -59,7 +61,20 @@ function objIdFastLoader(id) {
     return object;
 }
 
+// pozycjonowanie graczy 
+
 function setPlayers(data) {
-    let cnt = Object.keys(data).length;
-    console.log(cnt);
+    let cnt = Object.keys(data).length - 1;
+    for (let i = 1; i <= cnt; i++) {
+        let obj = objIdFastLoader(data[i].id);
+        if (obj != false && obj != null) {
+            obj.style.left = data[i].pozX + 'px';
+            obj.style.top = data[i].pozY + 'px';
+            obj.style.display = "block";
+        } else {
+            if (data[i].id != id) {
+                document.getElementById('cNt').innerHTML += `<div class="other" id="${data[i].id}"></div>`;
+            }
+        }
+    }
 }

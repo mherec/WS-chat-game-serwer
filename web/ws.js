@@ -1,6 +1,9 @@
 const username = "testowy"
+let id = "00000";
 let chatMessages = document.getElementById('chatMessages');
 let date = new Date();
+
+const key = "";
 
 let hours = date.getHours().toString().padStart(2, '0');
 let minutes = date.getMinutes().toString().padStart(2, '0');
@@ -12,26 +15,40 @@ ws = new WebSocket("ws://192.168.1.51:8000");
 
 ws.onopen = function (e) {
     chatMessages.innerHTML = `<span class='ws_ok'>${timeString} Połączono</span>`;
+    // proste logowanie
+    const getLogin = {
+        key: key,
+        com: 'login',
+        username: username,
+    };
+    ws.send(JSON.stringify(getLogin));
     // Cykliczne wysyłanie, można dodać funkcje zabezpieczeń kluczy itp. 
     setInterval(function () {
         const message = {
+            id: id,
             com: 'game',
             username: username,
-            key: '',
+            key: key,
             userX: userX,
             userY: userY,
         };
         ws.send(JSON.stringify(message));
-    }, 100);
+    }, 10);
 };
 
 ws.onmessage = function (event) {
     const newData = JSON.parse(event.data)
+    //  console.log(newData)
     if (newData.com === 'chat') {
-        chatMessages.innerHTML += `<span class='ws_msg'>${timeString} <b>${newData.username}</b>: ${newData.message} </span>`
+        chatMessages.innerHTML += `<span class='ws_msg'>${timeString} <b> [${newData.id}] ${newData.username}</b>: ${newData.message} </span>`
     }
-    if (newData.com === 'game') {
+    if (newData[0].com === 'game') {
         setPlayers(newData);
+    }
+    if (newData[0].com === 'login') {
+        console.log("id = ", id)
+        id = newData[0].id;
+
     }
 };
 
@@ -55,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const message = {
                 com: 'chat',
                 username: username,
-                key: '',
+                key: key,
                 message: this.value,
             }
             ws.send(JSON.stringify(message))
