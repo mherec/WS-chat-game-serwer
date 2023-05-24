@@ -1,4 +1,4 @@
-# ws_chat_game_serwer
+# WebSocket Simple Chat and Game serwer + example
 Jak uruchomić:<br />
 Uruchom konsole w folderze i wpisz: <b>node game.js</b> lub uruchom serwer_gra.bat (tylko Windows)<br />
 W przeglądarce wpisz URL: localhost:8001<br />
