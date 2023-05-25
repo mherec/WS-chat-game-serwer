@@ -4,7 +4,7 @@ const wsPort = 8000
 const postPort = 8001
 const WebSocket = require('ws')
 const chat = require('./engine/chat');
-// Klucz można dodać do env lub najlepiej pobierać z bazy dla każdego indywidualnie
+// Replace key update here
 const key = '';
 
 let nextId = 75478;
