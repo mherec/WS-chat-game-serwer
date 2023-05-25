@@ -15,14 +15,14 @@ ws = new WebSocket("ws://192.168.1.51:8000");
 
 ws.onopen = function (e) {
     chatMessages.innerHTML = `<span class='ws_ok'>${timeString} Połączono</span>`;
-    // proste logowanie
+    // Login com
     const getLogin = {
         key: key,
         com: 'login',
         username: username,
     };
     ws.send(JSON.stringify(getLogin));
-    // Cykliczne wysyłanie, można dodać funkcje zabezpieczeń kluczy itp. 
+    // Sync
     setInterval(function () {
         const message = {
             id: id,
