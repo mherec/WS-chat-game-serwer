@@ -1,4 +1,4 @@
-// Sterowanie
+// Control
 
 document.addEventListener('keydown', function (event) {
     switch (event.code) {
@@ -25,10 +25,10 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-// wartości sterowania
+// Control start val
 
-let userX = 100;
-let userY = 100;
+let userX = -100;
+let userY = -100;
 
 function setPoz(poz, val) {
 
@@ -47,7 +47,7 @@ function setPoz(poz, val) {
     }
 }
 
-// funkcja pobierająca obiekt
+// oget obj
 
 function objIdFastLoader(id) {
     let object;
@@ -61,7 +61,7 @@ function objIdFastLoader(id) {
     return object;
 }
 
-// pozycjonowanie graczy 
+// Add player / set position
 
 function setPlayers(data) {
     let cnt = Object.keys(data).length - 1;
