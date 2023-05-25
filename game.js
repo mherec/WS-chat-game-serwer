@@ -12,9 +12,7 @@ const clients = new Map();
 
 app.use(express.static('web'));
 
-let players = [{}];
-players[0] = { com: "game", key: key }
-
+let players = [{com: "game", key: key}];
 
 
 const wss = new WebSocket.Server({ port: wsPort });
